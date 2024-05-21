@@ -7,19 +7,14 @@
   </PropertyGroup>
 
   <ItemGroup>
-<<<<<<< HEAD
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="8.0.5" />
-=======
->>>>>>> 397e4f4e700a50188659627e5d43bae6f081e4d6
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.5">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
     <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="8.0.5" />
-<<<<<<< HEAD
     <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="7.5.2" />
-=======
->>>>>>> 397e4f4e700a50188659627e5d43bae6f081e4d6
+
   </ItemGroup>
 
 </Project>
