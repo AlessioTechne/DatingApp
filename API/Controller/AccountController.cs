@@ -55,6 +55,6 @@ public class AccountController(DataContext datacontext, ITokenServices tokenServ
     }
 
     private async Task<bool> UserExist(string username){
-        return await _datacontext.Users.AnyAsync(x=> x.UserName.Equals(username, StringComparison.CurrentCultureIgnoreCase));
+        return await _datacontext.Users.AnyAsync(x=> x.UserName==username);
     }
 }
