@@ -33,7 +33,7 @@ public class AccountController(DataContext datacontext, ITokenServices tokenServ
         return user;
     }
 
-[HttpPost("login")]
+    [HttpPost("login")]
     public async Task<ActionResult<UserDTO>> Login(LoginDTO loginDTO){
         var user = await _datacontext.Users.FirstOrDefaultAsync(x => x.UserName == loginDTO.UserName);
         if(user == null){
