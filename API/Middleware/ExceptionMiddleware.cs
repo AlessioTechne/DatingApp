@@ -12,10 +12,11 @@ public class ExceptionMiddleware(RequestDelegate requestDelegate, ILogger<Except
 
     public async Task InvokeAsync(HttpContext httpContext)
     {
-        try{
+        try
+        {
             await _next(httpContext);
         }
-        catch( Exception ex )
+        catch (Exception ex)
         {
             _logger.LogError(ex, ex.Message);
             httpContext.Response.ContentType = "application/json";
@@ -24,9 +25,9 @@ public class ExceptionMiddleware(RequestDelegate requestDelegate, ILogger<Except
             var response = _environment.IsDevelopment()
                 ? new ApiException(httpContext.Response.StatusCode, ex.Message, ex.StackTrace?.ToString())
                 : new ApiException(httpContext.Response.StatusCode, ex.Message, "Internal Server Error");
-            
-            var options = new JsonSerializerOptions{PropertyNamingPolicy = JsonNamingPolicy.CamelCase};
-            var json =JsonSerializer.Serialize(response, options);
+
+            var options = new JsonSerializerOptions { PropertyNamingPolicy = JsonNamingPolicy.CamelCase };
+            var json = JsonSerializer.Serialize(response, options);
 
             await httpContext.Response.WriteAsync(json);
         }

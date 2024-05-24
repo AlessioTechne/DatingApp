@@ -7,20 +7,20 @@ import { AccountService } from './_services/account.service';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent implements OnInit{
-  
+export class AppComponent implements OnInit {
+
   title = 'Dating App';
   users: any;
 
-  constructor(private accountServices: AccountService){}
+  constructor(private accountServices: AccountService) { }
 
   ngOnInit(): void {
     this.setCurrentUser();
   }
 
-  setCurrentUser(){
+  setCurrentUser() {
     const userString = localStorage.getItem('user')
-    if(!userString) return;
+    if (!userString) return;
     const user: User = JSON.parse(userString);
     this.accountServices.setCurrentUser(user);
   }

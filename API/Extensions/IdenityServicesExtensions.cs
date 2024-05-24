@@ -6,14 +6,17 @@ namespace API.Extensions;
 
 public static class IdenityServicesExtensions
 {
-    public static IServiceCollection AddIdentityServices(this IServiceCollection services, IConfiguration configuration){
+    public static IServiceCollection AddIdentityServices(this IServiceCollection services, IConfiguration configuration)
+    {
         services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-        .AddJwtBearer(options => {
-            options.TokenValidationParameters = new TokenValidationParameters{
-            ValidateIssuerSigningKey = true,
-            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["TokenKey"])),
-            ValidateIssuer = false,
-            ValidateAudience = false,
+        .AddJwtBearer(options =>
+        {
+            options.TokenValidationParameters = new TokenValidationParameters
+            {
+                ValidateIssuerSigningKey = true,
+                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["TokenKey"])),
+                ValidateIssuer = false,
+                ValidateAudience = false,
             };
         });
 

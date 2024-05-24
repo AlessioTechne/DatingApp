@@ -10,22 +10,22 @@ import { ToastrService } from 'ngx-toastr';
   templateUrl: './nav.component.html',
   styleUrls: ['./nav.component.css']
 })
-export class NavComponent implements OnInit{
-  model: any ={};
-  currentUser: Observable<User|null> = of(null);
+export class NavComponent implements OnInit {
+  model: any = {};
+  currentUser: Observable<User | null> = of(null);
 
-  constructor(public accountServices: AccountService, private router: Router, private toastr: ToastrService){}
+  constructor(public accountServices: AccountService, private router: Router, private toastr: ToastrService) { }
 
   ngOnInit(): void {
   }
 
-  login(){
+  login() {
     this.accountServices.login(this.model).subscribe({
       next: () => this.router.navigateByUrl('/members'),
     })
   }
 
-  logout(){
+  logout() {
     this.accountServices.logout();
     this.router.navigateByUrl('/')
   }
