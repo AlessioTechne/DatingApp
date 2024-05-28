@@ -5,25 +5,26 @@ import { ToastrService } from 'ngx-toastr';
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
-  styleUrls: ['./register.component.css']
+  styleUrls: ['./register.component.css'],
 })
 export class RegisterComponent implements OnInit {
   @Output() cancelRegister = new EventEmitter();
-  model: any = {}
+  model: any = {};
 
-  constructor(private accountService: AccountService, private toastr: ToastrService) { }
+  constructor(
+    private accountService: AccountService,
+    private toastr: ToastrService
+  ) {}
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 
   register() {
     this.accountService.register(this.model).subscribe({
       next: () => {
-        this.cancel()
+        this.cancel();
       },
-      error: error => this.toastr.error(error.error)
-
-    })
+      error: (error) => this.toastr.error(error.error),
+    });
   }
 
   cancel() {

@@ -38,7 +38,7 @@ public class AccountController(DataContext datacontext, ITokenServices tokenServ
     [HttpPost("login")]
     public async Task<ActionResult<UserDTO>> Login(LoginDTO loginDTO)
     {
-        var user = await _datacontext.Users.FirstOrDefaultAsync(x => x.UserName == loginDTO.UserName);
+        var user = await _datacontext.Users.FirstOrDefaultAsync(x => x.UserName == loginDTO.UserName.ToLower());
         if (user == null)
         {
             return Unauthorized();

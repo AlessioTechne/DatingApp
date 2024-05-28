@@ -1,6 +1,7 @@
 @API_HostAddress = http://localhost:5105
 
-GET {{API_HostAddress}}/weatherforecast/
+@Produces("text/plain")
+
 Accept: application/json
 
 ###

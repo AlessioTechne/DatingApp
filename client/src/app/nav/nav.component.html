@@ -2,7 +2,7 @@
   <div class="container">
     <a class="navbar-brand" routerLink="/" routerLinkActive="active">Dating App</a>
     <ul class="navbar-nav me-auto mb-2 mb-md-0">
-      <ng-container *ngIf="accountServices.currentUser$|async">
+      <ng-container *ngIf="accountService.currentUser$|async">
         <li class="nav-item">
           <a class="nav-link" routerLink="/members" routerLinkActive="active">Matches</a>
         </li>
@@ -18,16 +18,16 @@
       </li>
     </ul>
 
-    <div class="dropdown" *ngIf="accountServices.currentUser$|async as user" dropdown>
-      <a class="dropdown-toggle text-light text-decoration-none" dropdownToggle>Welcome {{user.username|titlecase}}</a>
+    <div class="dropdown" *ngIf="accountService.currentUser$|async as user" dropdown>
+      <a class="dropdown-toggle text-light text-decoration-none" dropdownToggle>Welcome {{user.userName|titlecase}}</a>
       <div class="dropdown-menu" *dropdownMenu>
-        <a class="dropdown-item">Edit Profile</a>
+        <a class="dropdown-item" routerLink="/member/edit">Edit Profile</a>
         <a class="dropdown-item" (click)="logout()">Logout</a>
       </div>
     </div>
 
     <form #loginForm="ngForm" class="d-flex" (ngSubmit)="login()" autocomplete="off"
-      *ngIf="!(accountServices.currentUser$|async)">
+      *ngIf="!(accountService.currentUser$|async)">
       <input name="Username" [(ngModel)]="model.Username" class="form-control me-2" type="text" placeholder="Username">
 
       <input name="Password" [(ngModel)]="model.Password" class="form-control me-2" type="password"
