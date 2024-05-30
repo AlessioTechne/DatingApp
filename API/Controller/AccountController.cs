@@ -6,33 +6,37 @@ using API.DTO;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using API.Interfaces;
+using AutoMapper;
 
 namespace API.Controller;
 
-public class AccountController(DataContext datacontext, ITokenServices tokenServices) : BaseApiController
+public class AccountController(DataContext datacontext, ITokenServices tokenServices, IMapper mapper) : BaseApiController
 {
     private readonly DataContext _datacontext = datacontext;
     private readonly ITokenServices _tokenServices = tokenServices;
+    private readonly IMapper _mapper = mapper;
 
     [HttpPost("register")]
-    public async Task<ActionResult<AppUser>> Register(RegisterDTO registerDTO)
+    public async Task<ActionResult<UserDTO>> Register(RegisterDTO registerDTO)
     {
 
         if (await UserExist(registerDTO.UserName)) { return BadRequest("Username is taken"); }
 
-        using var hmac = new HMACSHA512();
+        var user = _mapper.Map<AppUser>(registerDTO);
 
-        var user = new AppUser
-        {
-            UserName = registerDTO.UserName.ToLower(),
-            PasswordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(registerDTO.Password)),
-            PasswordSalt = hmac.Key
-        };
+        using var hmac = new HMACSHA512();
+        user.UserName = registerDTO.UserName.ToLower();
+        user.PasswordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(registerDTO.Password));
+        user.PasswordSalt = hmac.Key;
 
         _datacontext.Users.Add(user);
         await _datacontext.SaveChangesAsync();
 
-        return user;
+        return new UserDTO{
+            UserName = registerDTO.UserName,
+            Token = _tokenServices.CreateToken(user),
+            KnownAs = registerDTO.KnownAs
+        };
     }
 
     [HttpPost("login")]
@@ -59,6 +63,7 @@ public class AccountController(DataContext datacontext, ITokenServices tokenServ
             UserName = loginDTO.UserName,
             Token = _tokenServices.CreateToken(user),
             PhotoUrl = user.Photos.FirstOrDefault(x => x.IsMain)?.Url,
+            KnownAs = user.KnownAs
         };
     }
 
