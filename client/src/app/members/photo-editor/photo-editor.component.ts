@@ -61,7 +61,7 @@ export class PhotoEditorComponent implements OnInit {
         if(photo.isMain && this.user && this.member){
           this.user.photoUrl = photo.url;
           this.member.photoUrl = photo.url;
-          this.accountServices.setCurrentUser(this.user);
+          this.accountServices.setCurrentUser(this.user); 
         }
       }
     };
