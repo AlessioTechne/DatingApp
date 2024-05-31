@@ -20,4 +20,7 @@ public class AppUser
     public string Country { get; set; }
     public List<Photo> Photos { get; set; } = [];
 
+    public List<UserLike> LikedByUser { get; set; }
+    public List<UserLike> LikedUser { get; set; }
+
 }

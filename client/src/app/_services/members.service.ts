@@ -130,4 +130,19 @@ export class MembersService {
       environment.apiUrl + 'users/delete-photo/' + photoId
     );
   }
+
+  addLike(predicate: string) {
+    return this.http.post(
+      environment.apiUrl + 'likes/?predicate=' + predicate,
+      {}
+    );
+  }
+
+  getLike(predicate: string, pageNumber: number, pageSize: number) {
+    let params = this.getPaginationheaders(pageNumber, pageSize);
+
+    params = params.append('predicate',predicate);
+
+    return this.getPaginatedResult<Member[]>(environment.apiUrl + 'likes/' , params);
+  }
 }
