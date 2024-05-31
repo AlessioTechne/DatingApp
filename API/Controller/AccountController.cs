@@ -32,10 +32,12 @@ public class AccountController(DataContext datacontext, ITokenServices tokenServ
         _datacontext.Users.Add(user);
         await _datacontext.SaveChangesAsync();
 
-        return new UserDTO{
-            UserName = registerDTO.UserName,
+        return new UserDTO
+        {
+            UserName = user.UserName,
             Token = _tokenServices.CreateToken(user),
-            KnownAs = registerDTO.KnownAs
+            KnownAs = user.KnownAs,
+            Gender = user.Gender
         };
     }
 
@@ -63,7 +65,8 @@ public class AccountController(DataContext datacontext, ITokenServices tokenServ
             UserName = loginDTO.UserName,
             Token = _tokenServices.CreateToken(user),
             PhotoUrl = user.Photos.FirstOrDefault(x => x.IsMain)?.Url,
-            KnownAs = user.KnownAs
+            KnownAs = user.KnownAs,
+            Gender = user.Gender
         };
     }
 
