@@ -23,6 +23,7 @@ public static class ApplicationServicesExtensions
         services.Configure<CloudinarySettings>(configuration.GetSection("CloudinarySettings"));
         services.AddScoped<IPhotoServices, PhotoServices>();
         services.AddScoped<ILikeRepository, LikesRepository>();
+        services.AddScoped<IMessageRepository, MessageRepository>();
         services.AddScoped<LogUserActivity>();
 
         return services;
