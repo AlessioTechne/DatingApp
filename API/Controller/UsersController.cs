@@ -1,10 +1,8 @@
-using System.Security.Claims;
 using API.DTO;
 using API.Entities;
 using API.Extensions;
 using API.Helpers;
 using API.Interfaces;
-using API.Services;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 
@@ -20,13 +18,15 @@ public class UsersController(IUserRepository repository, IMapper mapper, IPhotoS
     private readonly IMapper _mapper = mapper;
     private readonly IPhotoServices _photoServices = photoServices;
 
+    [Authorize(Roles = "Admin")]
     [HttpGet]
     public async Task<ActionResult<PagedList<MemberDTO>>> GetUsers([FromQuery] UserParams userParams)
     {
         var currentUser = await _repository.GetUserByUsernameAsync(User.GetUsername());
         userParams.CurrentUsername = currentUser.UserName;
 
-        if(string.IsNullOrEmpty(userParams.Gender)){
+        if (string.IsNullOrEmpty(userParams.Gender))
+        {
             userParams.Gender = currentUser.Gender == "male" ? "female" : "male";
         }
 
@@ -37,6 +37,7 @@ public class UsersController(IUserRepository repository, IMapper mapper, IPhotoS
         return Ok(user);
     }
 
+    [Authorize(Roles = "Member")]
     [HttpGet("{username}")]
     public async Task<ActionResult<MemberDTO>> GetUserByUsernameAsync(string username)
     {
